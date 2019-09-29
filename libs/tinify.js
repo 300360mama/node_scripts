@@ -6,17 +6,20 @@ const path = require('path');
 tinify.key = "4znGb1fQ57K6v4MqJmjD156fym2cFBwS";
 
 function optimize() {
-    if (!argv.path) {
-        console.log("You must add path/to/directory");
+    if (!argv.slide && !argv.projectFolder) {
+        console.log("You must add name slide and path to project folder");
         process.exit(-1);
     }
 
-    const folder = path.normalize(argv.path);
+    const folder = argv.projectFolder + path.sep + 'app' + path.sep + 'media' + path.sep + 'images' + path.sep + argv.slide;
+    const full_path = path.normalize(folder);
+    console.log(full_path);
 
-    fs.readdir(folder, function(err, items) {
-        console.log(items);
+    fs.readdir(full_path, function(err, items) {
+
+        if (err) throw err;
         for (var i = 0; i < items.length; i++) {
-            const file = folder + path.sep + items[i];
+            const file = full_path + path.sep + items[i];
 
             fs.stat(file, function(err, stats) {
 
@@ -25,7 +28,6 @@ function optimize() {
                     source.toFile(file);
                 }
             });
-
 
         }
     });
