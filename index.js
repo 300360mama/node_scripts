@@ -1,4 +1,5 @@
 const tn = require('./libs/tinify');
-const argv = require('yargs').argv;
+const settings = require('./libs/parse_settings');
 
-tn.optimize();
+settings.parse();
+// tn.optimize();
